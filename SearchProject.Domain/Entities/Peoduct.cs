@@ -3,7 +3,7 @@
     public class Product
     {
         private readonly List<ProductVariant> _variants = new();
-
+        public IReadOnlyCollection<ProductVariant> Variants => _variants.AsReadOnly();
         public int Id { get; private set; }
         public string Name { get; private set; } = null!;
         public string Description { get; private set; } = null!;
@@ -36,10 +36,7 @@
             if (_variants.Any(v => v.Sku == sku))
                 throw new InvalidOperationException("Duplicate SKU");
 
-            var variant = new ProductVariant(sku, quantity, isActive);
-            foreach (var attr in attributes)
-                variant.AddAttribute(attr);
-
+            var variant = ProductVariant.Create(sku, quantity, isActive, attributes);
             _variants.Add(variant);
         }
 

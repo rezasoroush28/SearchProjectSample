@@ -8,15 +8,22 @@
         public string Sku { get; private set; } = null!;
         public int Quantity { get; private set; }
         public bool IsActive { get; private set; }
-
-        public ProductVariant(string sku, int quantity, bool isActive)
+        private ProductVariant() { }
+        private ProductVariant(string sku, int quantity, bool isActive)
         {
             Sku = sku;
             Quantity = quantity;
             IsActive = isActive;
         }
-        private ProductVariant() { }
 
+
+        public static ProductVariant Create(string sku, int quantity, bool isActive, List<ProductAttribute> attributes)
+        {
+            var variant = new ProductVariant(sku, quantity, isActive);
+            foreach (var attr in attributes)
+                variant.AddAttribute(attr);
+            return variant;
+        }
         public void AddAttribute(ProductAttribute attribute)
         {
             _attributes.Add(attribute);
