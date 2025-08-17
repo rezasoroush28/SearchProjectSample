@@ -8,6 +8,11 @@ namespace SearchProduct.Infrastructure.Persistence
         DbSet<Product>  products;
         DbSet<Category> categories;
 
+        public ProjectDbContext(DbContextOptions<ProjectDbContext> options)
+        : base(options)
+        {
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ProjectDbContext).Assembly);
